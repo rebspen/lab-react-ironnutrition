@@ -1,0 +1,10 @@
+.media{
+  margin:1em;
+  border-radius: 12px;
+  border: 1px solid grey;
+  width: 50%;
+}
+
+.photo{
+  border-radius: 12px;
+}
