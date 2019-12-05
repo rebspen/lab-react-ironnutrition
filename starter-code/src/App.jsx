@@ -3,6 +3,8 @@ import "./App.scss";
 import Foodbox from "./Components/Foodbox";
 import Form from "./Components/Form";
 import Search from "./Components/Search";
+import TodaysFoodList from './Components/TodaysFoodList';
+
 
 import foods from "./foods";
 import { catchClause } from "@babel/types";
@@ -13,12 +15,14 @@ class App extends Component {
     this.state = {
       foods: foods,
       showForm: false,
-      search: ""
+      search: "",
+      todaysFoodList: []
     };
     this.handleFormInput = this.handleFormInput.bind(this);
     this.showFoodForm = this.showFoodForm.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.search = this.search.bind(this);
+    this.handleAddToTodaysList = this.handleAddToTodaysList.bind(this);
   }
 
   handleFormInput(data, e) {
@@ -66,19 +70,40 @@ class App extends Component {
     });
   }
 
+  handleAddToTodaysList(data) {
+    console.log("DATA", data)
+    const list = [...this.state.todaysFoodList];
+    list.push(data);
+    this.setState({
+      todaysFoodList: list
+    });
+  }
+
   render() {
     return (
       <div>
+     
         {/* <input type="text" placeholder="Search..." onChange = {this.handleInputChange, this.handleSearchInput} name="search"
             value={this.state.search}/> */}
         <Search search = {this.search}/>    
         <button class ="form" onClick = {this.showFoodForm}>Add food</button>
         <Form show = {this.state.showForm} formSubmit = {this.handleFormInput}/>
+        <div className = "main">
+        <div>
         {this.state.foods.map(value => {
           if (value.name.toLowerCase().includes(this.state.search.toLowerCase())){
-            return <Foodbox {...value} />;
+            return <Foodbox {...value} handleAddition={this.handleAddToTodaysList} food={foods}
+                  key={foods.name}/>;
           }
         })}
+        </div>
+        <div>
+        <p>hi</p>
+        <TodaysFoodList list={this.state.todaysFoodList} />
+        </div>
+      
+        </div>
+       
       </div>
     );
   }
