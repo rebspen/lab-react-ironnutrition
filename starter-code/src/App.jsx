@@ -98,7 +98,7 @@ class App extends Component {
         })}
         </div>
         <div>
-        <p>hi</p>
+        <p>Today's food list</p>
         <TodaysFoodList list={this.state.todaysFoodList} />
         </div>
       
